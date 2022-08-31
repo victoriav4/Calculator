@@ -6,6 +6,8 @@ const operations = ['+', '-', '/', '*'];
 
 let numberStorage;
 let operationStorage;
+let isThisTheFirstTime = true;
+
 
 
 //Math function
@@ -73,8 +75,7 @@ let numberButtonHandlerFunction = function() {
 //Equal handler function
 let equalHandlerFunction = function() {
   var numInStorage = parseInt(numberStorage);
-  var numOnScreen = parseInt(screen.innerText)
-
+  var numOnScreen = parseInt(screen.innerText);
   if (operationStorage === '+') {
     screen.innerText = numInStorage + numOnScreen;
   } else if (operationStorage === '-') {
@@ -84,7 +85,10 @@ let equalHandlerFunction = function() {
   } else if (operationStorage === '*') {
     screen.innerText = numInStorage * numOnScreen;
   }
-
+  if (isThisTheFirstTime === true) {
+    numberStorage = numOnScreen;
+    isThisTheFirstTime = false;
+  }
   // screen.innerText = performOperation(numberStorage, screen.innerText);
 };
 
@@ -119,7 +123,6 @@ for(var i = 0; i < numberArray.length; i++) {
 
 
 
-//make = either clear everything in storage or keeps running the operation up or down
 
 //You should round answers with long decimals so that they don’t overflow the screen
 
@@ -131,14 +134,3 @@ for(var i = 0; i < numberArray.length; i++) {
 
 //add a backspace button
 
- //take number1 and put it on the screen
-    //hit operation1 button
-      //clears the screen
-      //adds number1 to storage
-      //adds operation1 to storage
-    //hit number 2
-      //adds number 2 to the screen
-    //hit equals
-      //add the two numbers
-    //hit equals
-      //add number 2 and the current number
