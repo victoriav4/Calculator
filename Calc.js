@@ -71,8 +71,6 @@ let numberButtonHandlerFunction = function() {
   screen.innerText = screen.innerText + this.innerText; 
 };
 
-
-//Equal handler function
 let equalHandlerFunction = function() {
   var numInStorage = parseInt(numberStorage);
   var numOnScreen = parseInt(screen.innerText);
@@ -92,6 +90,14 @@ let equalHandlerFunction = function() {
   // screen.innerText = performOperation(numberStorage, screen.innerText);
 };
 
+//Clear handler function
+let clearHandlerFunction = function() {
+  screen.innerText = '';
+  numberStorage = undefined;
+  operationStorage = '';
+  isThisTheFirstTime = true;
+}
+
 
 //addEventListeners
 document.getElementById('+').addEventListener('click', plusHandlerFunction);
@@ -99,6 +105,7 @@ document.getElementById('-').addEventListener('click', minusHandlerFunction);
 document.getElementById('/').addEventListener('click', divideHandlerFunction);
 document.getElementById('*').addEventListener('click', multiplyHandlerFunction);
 document.getElementById('=').addEventListener('click', equalHandlerFunction);
+document.getElementById('ac').addEventListener('click', clearHandlerFunction);
 document.addEventListener('keydown', function (event) {
   if (numbers.includes(event['key']) === true) {
     screen.innerText = screen.innerText + event['key'];
@@ -111,6 +118,9 @@ document.addEventListener('keydown', function (event) {
     operationStorage = event['key'];
     screen.innerText = '';
   }
+  if (event.key === '=') {
+   equalHandlerFunction();
+  }
 });
 
 
@@ -120,12 +130,6 @@ for(var i = 0; i < numberArray.length; i++) {
 };
 
 
-
-
-
-
-//You should round answers with long decimals so that they don’t overflow the screen
-
 //make sure clear clears all stored data as well as current data
 
 //display error message if trying to divide by 0
@@ -133,4 +137,3 @@ for(var i = 0; i < numberArray.length; i++) {
 //make sure no more than one decimal can be inputed in a single input
 
 //add a backspace button
-
