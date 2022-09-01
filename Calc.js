@@ -19,6 +19,9 @@ let performOperation = function(num1 , num2) {
     result =  parseInt(num1) - parseInt(num2);
   } else if (operationStorage === '/') {
     result =  parseInt(num1) / parseInt(num2);
+    if (num2 === '0') {
+      screen.innerText = 'Error';
+    }
   } else if (operationStorage === '*') {
     result = parseInt(num1) * parseInt(num2);
   }
@@ -68,10 +71,16 @@ let multiplyHandlerFunction = function() {
 };
 
 let numberButtonHandlerFunction = function() {
+  if (screen.innerText === 'Error') {
+    clearHandlerFunction();
+  }
   screen.innerText = screen.innerText + this.innerText; 
 };
 
 let equalHandlerFunction = function() {
+  if (screen.innerText === 'Error') {
+    return;
+  }
   var numInStorage = parseInt(numberStorage);
   var numOnScreen = parseInt(screen.innerText);
   if (operationStorage === '+') {
@@ -80,6 +89,9 @@ let equalHandlerFunction = function() {
     screen.innerText = numInStorage - numOnScreen;
   } else if (operationStorage === '/') {
     screen.innerText = numInStorage / numOnScreen;
+    if (numOnScreen === 0) {
+      screen.innerText = 'Error';
+    }
   } else if (operationStorage === '*') {
     screen.innerText = numInStorage * numOnScreen;
   }
@@ -129,10 +141,6 @@ for(var i = 0; i < numberArray.length; i++) {
   numberArray[i].addEventListener('click', numberButtonHandlerFunction);
 };
 
-
-//make sure clear clears all stored data as well as current data
-
-//display error message if trying to divide by 0
 
 //make sure no more than one decimal can be inputed in a single input
 
