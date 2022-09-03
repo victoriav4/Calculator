@@ -1,7 +1,7 @@
 //Variable declarations
 const numberArray = document.querySelectorAll(".number");
 const screen = document.getElementById('screen');
-const numbers = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'];
+const numbers = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '.'];
 const operations = ['+', '-', '/', '*'];
 
 let numberStorage;
@@ -14,16 +14,16 @@ let isThisTheFirstTime = true;
 let performOperation = function(num1 , num2) {
   let result;
   if (operationStorage === '+') {
-    result = parseInt(num1) + parseInt(num2);
+    result = parseFloat(num1) + parseFloat(num2);
   } else if (operationStorage === '-') {
-    result =  parseInt(num1) - parseInt(num2);
+    result =  parseFloat(num1) - parseFloat(num2);
   } else if (operationStorage === '/') {
-    result =  parseInt(num1) / parseInt(num2);
+    result =  parseFloat(num1) / parseFloat(num2);
     if (num2 === '0') {
       screen.innerText = 'Error';
     }
   } else if (operationStorage === '*') {
-    result = parseInt(num1) * parseInt(num2);
+    result = parseFloat(num1) * parseFloat(num2);
   }
   return result.toString();
 };
@@ -81,8 +81,8 @@ let equalHandlerFunction = function() {
   if (screen.innerText === 'Error') {
     return;
   }
-  var numInStorage = parseInt(numberStorage);
-  var numOnScreen = parseInt(screen.innerText);
+  var numInStorage = parseFloat(numberStorage);
+  var numOnScreen = parseFloat(screen.innerText);
   if (operationStorage === '+') {
     screen.innerText = numInStorage + numOnScreen;
   } else if (operationStorage === '-') {
@@ -110,6 +110,14 @@ let clearHandlerFunction = function() {
   isThisTheFirstTime = true;
 }
 
+//Decimal handler function
+let decimalHandlerFunction = function() {
+  if (screen.innerText.includes('.')) {
+    return;
+  }
+  screen.innerText = screen.innerText + '.';
+}
+
 
 //addEventListeners
 document.getElementById('+').addEventListener('click', plusHandlerFunction);
@@ -118,6 +126,7 @@ document.getElementById('/').addEventListener('click', divideHandlerFunction);
 document.getElementById('*').addEventListener('click', multiplyHandlerFunction);
 document.getElementById('=').addEventListener('click', equalHandlerFunction);
 document.getElementById('ac').addEventListener('click', clearHandlerFunction);
+document.getElementById('.').addEventListener('click', decimalHandlerFunction);
 document.addEventListener('keydown', function (event) {
   if (numbers.includes(event['key']) === true) {
     screen.innerText = screen.innerText + event['key'];
@@ -141,7 +150,5 @@ for(var i = 0; i < numberArray.length; i++) {
   numberArray[i].addEventListener('click', numberButtonHandlerFunction);
 };
 
-
-//make sure no more than one decimal can be inputed in a single input
 
 //add a backspace button
