@@ -118,6 +118,14 @@ let decimalHandlerFunction = function() {
   screen.innerText = screen.innerText + '.';
 }
 
+//Back handler function
+let backHandlerFunction = function() {
+  if (screen.innerText === '') {
+    return;
+  }
+  screen.innerText = screen.innerText.slice(0, screen.innerText.length - 1);
+}
+
 
 //addEventListeners
 document.getElementById('+').addEventListener('click', plusHandlerFunction);
@@ -127,6 +135,7 @@ document.getElementById('*').addEventListener('click', multiplyHandlerFunction);
 document.getElementById('=').addEventListener('click', equalHandlerFunction);
 document.getElementById('ac').addEventListener('click', clearHandlerFunction);
 document.getElementById('.').addEventListener('click', decimalHandlerFunction);
+document.getElementById('back').addEventListener('click', backHandlerFunction);
 document.addEventListener('keydown', function (event) {
   if (numbers.includes(event['key']) === true) {
     screen.innerText = screen.innerText + event['key'];
@@ -149,6 +158,3 @@ document.addEventListener('keydown', function (event) {
 for(var i = 0; i < numberArray.length; i++) {
   numberArray[i].addEventListener('click', numberButtonHandlerFunction);
 };
-
-
-//add a backspace button
