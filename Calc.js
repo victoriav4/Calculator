@@ -1,6 +1,6 @@
 //Variable declarations
 const numberArray = document.querySelectorAll(".number");
-const screen = document.getElementById('screen');
+const screen = document.getElementById('text');
 const numbers = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '.'];
 const operations = ['+', '-', '/', '*'];
 
@@ -158,3 +158,7 @@ document.addEventListener('keydown', function (event) {
 for(var i = 0; i < numberArray.length; i++) {
   numberArray[i].addEventListener('click', numberButtonHandlerFunction);
 };
+
+
+//negative issue 
+//hitting enter does not work as equal
