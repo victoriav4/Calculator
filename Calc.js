@@ -60,6 +60,7 @@ let divideHandlerFunction = function() {
   screen.innerText = '';
 };
 
+
 let multiplyHandlerFunction = function() {
   if (numberStorage !== undefined) {
     numberStorage = performOperation(numberStorage, screen.innerText);
@@ -71,6 +72,9 @@ let multiplyHandlerFunction = function() {
 };
 
 let numberButtonHandlerFunction = function() {
+  if (screen.innerText.length === 11) {
+    return;
+  }
   if (screen.innerText === 'Error') {
     clearHandlerFunction();
   }
@@ -84,16 +88,37 @@ let equalHandlerFunction = function() {
   var numInStorage = parseFloat(numberStorage);
   var numOnScreen = parseFloat(screen.innerText);
   if (operationStorage === '+') {
-    screen.innerText = numInStorage + numOnScreen;
+    //if number is greater than whatever
+    if (numInStorage + numOnScreen > 999999999) {
+      let scientific = (numInStorage + numOnScreen).toExponential(4);
+      screen.innerText = scientific;
+      } else {
+        screen.innerText = numInStorage + numOnScreen;
+      }
   } else if (operationStorage === '-') {
-    screen.innerText = numInStorage - numOnScreen;
+    if (numInStorage - numOnScreen > 999999999) {
+      let scientific = (numInStorage - numOnScreen).toExponential(4);
+      screen.innerText = scientific;
+      } else {
+        screen.innerText = numInStorage - numOnScreen;
+      }
   } else if (operationStorage === '/') {
-    screen.innerText = numInStorage / numOnScreen;
     if (numOnScreen === 0) {
       screen.innerText = 'Error';
     }
+    if (numInStorage / numOnScreen > 999999999) {
+      let scientific = (numInStorage / numOnScreen).toExponential(4);
+      screen.innerText = scientific;
+      } else {
+        screen.innerText = numInStorage / numOnScreen;
+      }
   } else if (operationStorage === '*') {
-    screen.innerText = numInStorage * numOnScreen;
+    if (numInStorage * numOnScreen > 999999999) {
+      let scientific = (numInStorage * numOnScreen).toExponential(4);
+      screen.innerText = scientific;
+      } else {
+        screen.innerText = numInStorage * numOnScreen;
+      }
   }
   if (isThisTheFirstTime === true) {
     numberStorage = numOnScreen;
@@ -102,7 +127,6 @@ let equalHandlerFunction = function() {
   // screen.innerText = performOperation(numberStorage, screen.innerText);
 };
 
-//Clear handler function
 let clearHandlerFunction = function() {
   screen.innerText = '';
   numberStorage = undefined;
@@ -110,15 +134,16 @@ let clearHandlerFunction = function() {
   isThisTheFirstTime = true;
 }
 
-//Decimal handler function
 let decimalHandlerFunction = function() {
+  if (screen.innerText.length > 9) {
+    return;
+  }
   if (screen.innerText.includes('.')) {
     return;
   }
   screen.innerText = screen.innerText + '.';
 }
 
-//Back handler function
 let backHandlerFunction = function() {
   if (screen.innerText === '') {
     return;
@@ -138,18 +163,26 @@ document.getElementById('.').addEventListener('click', decimalHandlerFunction);
 document.getElementById('back').addEventListener('click', backHandlerFunction);
 document.addEventListener('keydown', function (event) {
   if (numbers.includes(event['key']) === true) {
+    if (screen.innerText.length === 11) {
+      return;
+    }
     screen.innerText = screen.innerText + event['key'];
   }
   if (operations.includes(event['key']) === true) {
     if (numberStorage !== undefined) {
       numberStorage = performOperation(numberStorage, screen.innerText);
+    } else {
+      numberStorage = screen.innerText;
     }
-    numberStorage = screen.innerText;
     operationStorage = event['key'];
     screen.innerText = '';
   }
-  if (event.key === '=') {
-   equalHandlerFunction();
+  if (event.key === '=' || event.key === 'Enter') {
+    event.preventDefault();
+    equalHandlerFunction();
+  }
+  if (event.key === 'Backspace') {
+    backHandlerFunction();
   }
 });
 
@@ -161,4 +194,4 @@ for(var i = 0; i < numberArray.length; i++) {
 
 
 //negative issue 
-//hitting enter does not work as equal
+//max character to be length of screen size
