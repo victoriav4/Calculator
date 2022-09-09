@@ -28,6 +28,16 @@ let performOperation = function(num1 , num2) {
   return result.toString();
 };
 
+//Operation colors 
+let removeOperationColor = function () {
+  if (operationStorage !== undefined && operationStorage !== '') {
+    document.getElementById(operationStorage).classList.remove('highlight');
+  } 
+}
+
+let addOperationColor = function (currentOperation) {
+  document.getElementById(currentOperation).classList.add('highlight');
+}
 
 //event handler functions
 let plusHandlerFunction = function() {
@@ -36,7 +46,9 @@ let plusHandlerFunction = function() {
   } else {
     numberStorage = screen.innerText;
   }
+  removeOperationColor();
   operationStorage = '+';
+  addOperationColor('+');
   screen.innerText = '';
 };
 
@@ -46,7 +58,9 @@ let minusHandlerFunction = function() {
   } else {
     numberStorage = screen.innerText;
   }
+  removeOperationColor();
   operationStorage = '-';
+  addOperationColor('-');
   screen.innerText = '';
 }; 
 
@@ -56,7 +70,9 @@ let divideHandlerFunction = function() {
   } else {
     numberStorage = screen.innerText;
   }
+  removeOperationColor();
   operationStorage = '/';
+  addOperationColor('/');
   screen.innerText = '';
 };
 
@@ -67,7 +83,9 @@ let multiplyHandlerFunction = function() {
   } else {
     numberStorage = screen.innerText;
   }
+  removeOperationColor();
   operationStorage = '*';
+  addOperationColor('*');
   screen.innerText = '';
 };
 
@@ -82,6 +100,7 @@ let numberButtonHandlerFunction = function() {
 };
 
 let equalHandlerFunction = function() {
+  removeOperationColor();
   if (screen.innerText === 'Error') {
     return;
   }
@@ -130,6 +149,7 @@ let equalHandlerFunction = function() {
 let clearHandlerFunction = function() {
   screen.innerText = '';
   numberStorage = undefined;
+  removeOperationColor();
   operationStorage = '';
   isThisTheFirstTime = true;
 }

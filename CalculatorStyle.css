@@ -40,7 +40,9 @@ body {
   grid-template-columns: repeat(4, 1fr);
 }
 
-
+.highlight {
+  background-color: #cec0b4 !important;
+}
 
 button {
   border-radius: 50px;
