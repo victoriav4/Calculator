@@ -9,7 +9,6 @@ let operationStorage;
 let isThisTheFirstTime = true;
 
 
-
 //Math function
 let performOperation = function(num1 , num2) {
   let result;
@@ -20,13 +19,14 @@ let performOperation = function(num1 , num2) {
   } else if (operationStorage === '/') {
     result =  parseFloat(num1) / parseFloat(num2);
     if (num2 === '0') {
-      screen.innerText = 'Error';
+      result = 'Error';
     }
   } else if (operationStorage === '*') {
     result = parseFloat(num1) * parseFloat(num2);
   }
   return result.toString();
 };
+
 
 //Operation colors 
 let removeOperationColor = function () {
@@ -38,6 +38,7 @@ let removeOperationColor = function () {
 let addOperationColor = function (currentOperation) {
   document.getElementById(currentOperation).classList.add('highlight');
 }
+
 
 //event handler functions
 let plusHandlerFunction = function() {
@@ -99,53 +100,6 @@ let numberButtonHandlerFunction = function() {
   screen.innerText = screen.innerText + this.innerText; 
 };
 
-let equalHandlerFunction = function() {
-  removeOperationColor();
-  if (screen.innerText === 'Error') {
-    return;
-  }
-  var numInStorage = parseFloat(numberStorage);
-  var numOnScreen = parseFloat(screen.innerText);
-  if (operationStorage === '+') {
-    //if number is greater than whatever
-    if (numInStorage + numOnScreen > 999999999) {
-      let scientific = (numInStorage + numOnScreen).toExponential(4);
-      screen.innerText = scientific;
-      } else {
-        screen.innerText = numInStorage + numOnScreen;
-      }
-  } else if (operationStorage === '-') {
-    if (numInStorage - numOnScreen > 999999999) {
-      let scientific = (numInStorage - numOnScreen).toExponential(4);
-      screen.innerText = scientific;
-      } else {
-        screen.innerText = numInStorage - numOnScreen;
-      }
-  } else if (operationStorage === '/') {
-    if (numOnScreen === 0) {
-      screen.innerText = 'Error';
-    }
-    if (numInStorage / numOnScreen > 999999999) {
-      let scientific = (numInStorage / numOnScreen).toExponential(4);
-      screen.innerText = scientific;
-      } else {
-        screen.innerText = numInStorage / numOnScreen;
-      }
-  } else if (operationStorage === '*') {
-    if (numInStorage * numOnScreen > 999999999) {
-      let scientific = (numInStorage * numOnScreen).toExponential(4);
-      screen.innerText = scientific;
-      } else {
-        screen.innerText = numInStorage * numOnScreen;
-      }
-  }
-  if (isThisTheFirstTime === true) {
-    numberStorage = numOnScreen;
-    isThisTheFirstTime = false;
-  }
-  // screen.innerText = performOperation(numberStorage, screen.innerText);
-};
-
 let clearHandlerFunction = function() {
   screen.innerText = '';
   numberStorage = undefined;
@@ -169,6 +123,34 @@ let backHandlerFunction = function() {
     return;
   }
   screen.innerText = screen.innerText.slice(0, screen.innerText.length - 1);
+}
+
+let equalHandlerFunction = function() {
+  removeOperationColor();
+  if (screen.innerText === 'Error') {
+    return;
+  }
+  let number2 = screen.innerText;
+  let result = performOperation(numberStorage, number2);
+  
+  if (isThisTheFirstTime === false && operationStorage === '-') {
+    result = performOperation(number2, numberStorage);
+  }
+  //flip the order if this is the not the first minus operation
+  if (isThisTheFirstTime === true) {
+    numberStorage = number2;
+    isThisTheFirstTime = false;
+  }
+
+  if (result > 99999999999) {
+    result = parseFloat(result).toExponential(4).toString();
+  }
+
+  if (result.length > 11) {
+    currentIndex = result.indexOf('.');
+    result = parseFloat(result).toFixed(10 - currentIndex).toString();
+  }
+  screen.innerText = result;
 }
 
 
@@ -213,5 +195,4 @@ for(var i = 0; i < numberArray.length; i++) {
 };
 
 
-//negative issue 
 //max character to be length of screen size
