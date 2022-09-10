@@ -193,6 +193,3 @@ document.addEventListener('keydown', function (event) {
 for(var i = 0; i < numberArray.length; i++) {
   numberArray[i].addEventListener('click', numberButtonHandlerFunction);
 };
-
-
-//max character to be length of screen size

@@ -66,6 +66,14 @@ button {
   background-color: #c0c0c0d1; 
 }
 
+.ac {
+  font-size: 22px;
+}
+
+.back {
+  font-size: 24px;
+}
+
 .ac:hover, .back:hover, .percent:hover, .divide:hover, .multiply:hover, .minus:hover, .plus:hover, .equal:hover {
   background-color: #cec0b4;
 }
@@ -79,9 +87,3 @@ button:active {
   box-shadow: 7px 6px 10px 1px rgba(0, 0, 0, 0.24);
   transform: translateY(2px);
 }
-
-/* 
-button inner text styling 
-icons for back and clear buttons
-once operation is selected change its color (#cec0b4)
- */
